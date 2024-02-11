@@ -3,8 +3,35 @@ import './index.css'
 
 class LoginRoute extends Component {
     state={username: '',
-        password: ''
+        password: '',
+        showUserError: false,
+        showPasswordError: false
     }
+
+
+    validateUsername=()=>{
+        const {username}=this.state 
+        return username!==""
+    }
+
+    validatePassword=()=>{
+        const {password}=this.state 
+        return password!==""
+    }
+
+    onBlurUsername=()=>{
+        const result=this.validateUsername()
+        this.setState({showUserError: !result})
+
+    }
+
+    onBlurPassword=()=>{
+        const result=this.validatePassword()
+        this.setState({showPasswordError: !result})
+
+    }
+
+    
 
     onChangeUsername=(event)=>{
         this.setState({username: event.target.value})
@@ -19,19 +46,20 @@ class LoginRoute extends Component {
     }
 
     render() {
-        const {username, password}=this.state 
-        console.log(username)
-        console.log(password)
+        const {username, password, showUserError, showPasswordError}=this.state 
+      
         return (
             <div className='app-container'>
                 <form className='form-container' onSubmit={this.onSubmitForm}>
                     <div className='input-container'>
                         <label className='label-El' htmlFor='username'>Username</label>
-                        <input type="text" className='input-El' id='username' onChange={this.onChangeUsername}/>
+                        <input type="text" className='input-El' id='username' onChange={this.onChangeUsername} onBlur={this.onBlurUsername} value={username}/>
+                        {showUserError && <p className='error-msg'>*Required</p>}
                     </div>
                     <div className='input-container'>
                         <label className='label-El' htmlFor='password'>Password</label>
-                        <input type="password" className='input-El' id='password' onChange={this.onChangePassword}/>
+                        <input type="password" className='input-El' id='password' onChange={this.onChangePassword} onBlur={this.onBlurPassword} value={password}/>
+                        {showPasswordError && <p className='error-msg'>*Required</p>}
                     </div>
                     <button className='login-btn' type='submit'>login</button>
                 </form>
