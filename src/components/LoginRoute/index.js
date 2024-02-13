@@ -42,7 +42,8 @@ class LoginRoute extends Component {
     }
 
     onSubmitForm=(event)=>{
-        event.preventDefault()
+        event.preventDefault();
+
     }
 
     render() {
@@ -53,15 +54,15 @@ class LoginRoute extends Component {
                 <form className='form-container' onSubmit={this.onSubmitForm}>
                     <div className='input-container'>
                         <label className='label-El' htmlFor='username'>Username</label>
-                        <input type="text" className='input-El' id='username' onChange={this.onChangeUsername} onBlur={this.onBlurUsername} value={username}/>
+                        <input type="text" required className='input-El' id='username' onChange={this.onChangeUsername} onBlur={this.onBlurUsername} value={username}/>
                         {showUserError && <p className='error-msg'>*Required</p>}
                     </div>
                     <div className='input-container'>
                         <label className='label-El' htmlFor='password'>Password</label>
-                        <input type="password" className='input-El' id='password' onChange={this.onChangePassword} onBlur={this.onBlurPassword} value={password}/>
+                        <input type="password" required className='input-El' id='password' onChange={this.onChangePassword} onBlur={this.onBlurPassword} value={password}/>
                         {showPasswordError && <p className='error-msg'>*Required</p>}
                     </div>
-                    <button className='login-btn' type='submit'>login</button>
+                    <button className='login-btn' type='submit'>Login</button>
                 </form>
             </div>
         )
