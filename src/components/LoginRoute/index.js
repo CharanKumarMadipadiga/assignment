@@ -5,7 +5,17 @@ class LoginRoute extends Component {
     state={username: '',
         password: '',
         showUserError: false,
-        showPasswordError: false
+        showPasswordError: false,
+        showSubmitError: false,
+        errorMessage: '',
+    }
+
+    onSubmitSuccess=(jwtToken)=>{
+        console.log(jwtToken);
+    }
+
+    onSubmitFailure=(error)=>{
+        this.setState({showSubmitError: true, errorMessage: error})
     }
 
 
@@ -31,8 +41,6 @@ class LoginRoute extends Component {
 
     }
 
-    
-
     onChangeUsername=(event)=>{
         this.setState({username: event.target.value})
     }
@@ -41,13 +49,33 @@ class LoginRoute extends Component {
         this.setState({password: event.target.value})
     }
 
-    onSubmitForm=(event)=>{
+    onSubmitForm = async (event)=>{
         event.preventDefault();
+        const { username, password } = this.state;
+        const userDetails = { username, password };
+        const Body = JSON.stringify(userDetails);
+        const url = 'http://localhost:4000/login';
+        const options = {
+            method: 'POST',
+            body: Body,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        const response= await fetch(url, options)
+        const data= await response.json()
+        if(response.ok===true) {
+            this.onSubmitSuccess(data.jwtToken)
+        }
+        else {
+            this.onSubmitFailure(data.error_msg)
+        }
+
 
     }
 
     render() {
-        const {username, password, showUserError, showPasswordError}=this.state 
+        const {username, password, showUserError, showPasswordError, showSubmitError, errorMessage}=this.state 
       
         return (
             <div className='app-container'>
@@ -63,6 +91,7 @@ class LoginRoute extends Component {
                         {showPasswordError && <p className='error-msg'>*Required</p>}
                     </div>
                     <button className='login-btn' type='submit'>Login</button>
+                    {showSubmitError && <p className='error-msg'>*{errorMessage}</p>}
                 </form>
             </div>
         )

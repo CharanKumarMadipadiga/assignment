@@ -2,14 +2,14 @@ const express=require("express");
 const {open}=require("sqlite");
 const sqlite3=require("sqlite3");
 const path=require("path");
-
+const cors = require("cors");
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
-
 
 const dbPath=path.join(__dirname, "userdetails.db");
 let db=null
 const app=express();
+app.use(cors());
 app.use(express.json());
 
 
@@ -19,8 +19,8 @@ const initializeDBAndServer= async ()=>{
             filename: dbPath,
             driver: sqlite3.Database
         });
-        app.listen(3000, ()=>{
-            console.log("Server running at http://localhost:3000");
+        app.listen(4000, ()=>{
+            console.log("Server running at http://localhost:4000");
         });
     }
     catch(error) {
@@ -120,9 +120,12 @@ app.post("/login/", async (request, response)=>{
         if(isPasswordMatched===true) {
             const payload={username: username};
             const jwtToken=jwt.sign(payload, "MY_SECRET_KEY");
-            console.log(jwtToken);
             response.send({jwtToken});
-        } 
+        }
+        else {
+            response.status(400);
+            response.send({error_msg: "password is incorrect"});
+        }
     }
 })
 
