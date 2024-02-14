@@ -11,7 +11,8 @@ class LoginRoute extends Component {
     }
 
     onSubmitSuccess=(jwtToken)=>{
-        console.log(jwtToken);
+        const {history}=this.props
+        history.replace("/")
     }
 
     onSubmitFailure=(error)=>{

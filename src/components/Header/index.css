@@ -1,0 +1,50 @@
+.nav-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    height: 20vh;
+    align-items: center;
+   
+
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 300px;
+    width: 90%;
+    
+
+}
+
+.logo {
+    width: 160px;
+}
+
+.tabs-container {
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+    text-decoration: none;
+
+}
+
+.nav-link {
+    color: black;
+    font-size: 22px;
+    font-family: "Roboto";
+    font-weight: 500;
+    cursor: pointer;
+    
+
+}
+
+.logout-btn {
+    height: 32px;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    font-family: "Roboto";
+    color: #ffffff;
+    background-color: rgba(0, 110, 255, 0.305);
+}
